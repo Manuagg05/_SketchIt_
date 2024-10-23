@@ -1,14 +1,35 @@
-import React, { useRef, useLayoutEffect,useState, useEffect } from "react";
+import React, { useRef, useLayoutEffect, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
+import { iconsNamesArray } from "../constant";
+import { setActionMenuItems } from "../utils/MenuSlice";
 
 const Board = () => {
   const canvasRef = useRef(null);
   const shouldDraw = useRef(false);
+  const dispatch = useDispatch();
+  const actionItems = useSelector((store) => store.menu.actionMenuItems);
   const activeItems = useSelector((store) => store.menu.activeItems);
- const { color , size } = useSelector(
-   (store) => store.tool[activeItems] || {}
- );
+  const { color, size } = useSelector((store) => store.tool[activeItems] || {});
+
+  useEffect(() => {
+    if (!canvasRef.current) return;
+
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d");
+
+    if (actionItems === iconsNamesArray.FileArrowDown) {
+      const URL = canvas.toDataURL();
+      const anchor = document.createElement("a");
+      anchor.href = URL;
+      anchor.download = "sketch.jpg";
+      anchor.click();
+
+      console.log(URL);
+      dispatch(setActionMenuItems(null));
+    }
+
+    console.log("actionItems", actionItems);
+  }, [actionItems]);
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -37,8 +58,7 @@ const Board = () => {
     const handleMouseDown = (e) => {
       shouldDraw.current = true;
       context.beginPath();
-     context.moveTo(e.clientX,e.clientY)
-    
+      context.moveTo(e.clientX, e.clientY);
     };
     const handleMouseMove = (e) => {
       if (!shouldDraw.current) return;
@@ -70,5 +90,3 @@ const Board = () => {
   );
 };
 export default Board;
-
-

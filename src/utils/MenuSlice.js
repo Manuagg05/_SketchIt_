@@ -6,6 +6,7 @@ const MenuSlice = createSlice({
   initialState: {
     iconsName: iconsNamesArray.Pencil,
     activeItems: iconsNamesArray.Pencil,
+    actionMenuItems: null,
   },
   reducers: {
     clickPencil: (state, action) => {
@@ -14,7 +15,11 @@ const MenuSlice = createSlice({
     activeClick: (state, action) => {
       state.activeItems = action.payload;
     },
+    setActionMenuItems: (state, action) => {
+      state.actionMenuItems = action.payload;
+    },
   },
 });
-export const { clickPencil,activeClick } = MenuSlice.actions;
+export const { clickPencil, activeClick, setActionMenuItems } =
+  MenuSlice.actions;
 export default MenuSlice.reducer;

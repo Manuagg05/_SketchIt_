@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { activeClick, clickPencil } from "../utils/MenuSlice";
+import { activeClick, clickPencil,setActionMenuItems } from "../utils/MenuSlice";
 import { iconsNamesArray } from "../constant";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -16,6 +16,10 @@ export const Menu = () => {
   const handleClick = (iconName) => {
     dispatch(clickPencil(iconName));
     dispatch(activeClick(iconName));
+  };
+  const handleActionMenuItems = (iconName) => {
+    dispatch(setActionMenuItems(iconName));
+    
   };
 
   const activeMenu = useSelector((store) => store.menu.activeItems);
@@ -41,13 +45,28 @@ export const Menu = () => {
       >
         <FontAwesomeIcon icon={faEraser} className="icon" />
       </div>
-      <div className="cursor-pointer h-10 w-10 flex justify-center items-center rounded-md hover:bg-text2">
+      <div
+        className="cursor-pointer h-10 w-10 flex justify-center items-center rounded-md hover:bg-text2"
+        onClick={() => {
+          handleActionMenuItems(iconsNamesArray.FileArrowDown);
+        }}
+      >
         <FontAwesomeIcon icon={faFileArrowDown} className="icon" />
       </div>
-      <div className="cursor-pointer h-10 w-10 flex justify-center items-center rounded-md hover:bg-text2">
+      <div
+        className="cursor-pointer h-10 w-10 flex justify-center items-center rounded-md hover:bg-text2"
+        onClick={() => {
+          handleActionMenuItems(iconsNamesArray.RotateRight);
+        }}
+      >
         <FontAwesomeIcon icon={faRotateRight} className="icon" />
       </div>
-      <div className="cursor-pointer h-10 w-10 flex justify-center items-center rounded-md hover:bg-text2">
+      <div
+        className="cursor-pointer h-10 w-10 flex justify-center items-center rounded-md hover:bg-text2"
+        onClick={() => {
+          handleActionMenuItems(iconsNamesArray.RotateLeft);
+        }}
+      >
         <FontAwesomeIcon icon={faRotateLeft} className="icon" />
       </div>
     </div>
